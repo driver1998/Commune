@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml" alignment="CENTER"
+          fx:controller="com.commune.client.LoginWindowController" vgap="10" hgap="10">
+
+    <padding>
+        <Insets top="20" bottom="20" left="20" right="20"/>
+    </padding>
+
+    <VBox alignment="CENTER" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0">
+        <ImageView>
+            <Image url="@res/icon.png"/>
+        </ImageView>
+    </VBox>
+    <VBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+        <Label text="用户名"/>
+        <TextField fx:id="usernameField" />
+    </VBox>
+    <VBox GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+        <Label text="密码"/>
+        <PasswordField fx:id="passwordField"/>
+    </VBox>
+
+    <HBox alignment="BASELINE_RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="6">
+
+        <Button text="登录" onAction="#onLoginButtonAction">
+            <HBox.margin>
+                <Insets right="10"/>
+            </HBox.margin>
+        </Button>
+        <Button text="注册"/>
+    </HBox>
+</GridPane>
+

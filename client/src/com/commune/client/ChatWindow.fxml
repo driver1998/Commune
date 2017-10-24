@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.commune.client.ChatWindowController">
+    <padding>
+        <Insets top="10" bottom="10" left="10" right="10"/>
+    </padding>
+    <top>
+        <BorderPane>
+            <left>
+                <HBox alignment="CENTER_LEFT">
+                    <BorderPane.margin>
+                        <Insets bottom="10"/>
+                    </BorderPane.margin>
+                    <ImageView fitWidth="40" fitHeight="40">
+                        <Image url="@res/user.png"/>
+                    </ImageView>
+                    <Label text="user" fx:id="toUserLabel">
+                        <HBox.margin>
+                            <Insets left="10"/>
+                        </HBox.margin>
+                    </Label>
+                </HBox>
+            </left>
+            <right>
+                <Button text="文件" onAction="#onFileSendButtonAction" prefHeight="40"/>
+            </right>
+        </BorderPane>
+
+    </top>
+    <center>
+        <TextArea fx:id="conversationTextArea">
+            <BorderPane.margin>
+                <Insets bottom="10"/>
+            </BorderPane.margin>
+        </TextArea>
+    </center>
+    <bottom>
+        <BorderPane prefHeight="150" >
+            <center>
+                <TextArea fx:id="messageTextArea"/>
+            </center>
+            <bottom>
+                <VBox  alignment="BOTTOM_RIGHT">
+                    <Button text="发送" fx:id="sendButton" onAction="#onSendButtonAction">
+                        <VBox.margin>
+                            <Insets top="10"/>
+                        </VBox.margin>
+                    </Button>
+                </VBox>
+            </bottom>
+        </BorderPane>
+
+    </bottom>
+</BorderPane>
