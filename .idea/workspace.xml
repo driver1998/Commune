@@ -8,8 +8,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="27f49495-8e73-422e-94e3-a539321abde0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/src/com/commune/client/AddFriendWindowController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/client.iml" afterPath="$PROJECT_DIR$/client/client.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/com/commune/client/App.java" afterPath="$PROJECT_DIR$/client/src/com/commune/client/App.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/com/commune/client/LoginWindow.fxml" afterPath="$PROJECT_DIR$/client/src/com/commune/client/LoginWindow.fxml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/com/commune/client/LoginWindowController.java" afterPath="$PROJECT_DIR$/client/src/com/commune/client/LoginWindowController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/server.iml" afterPath="$PROJECT_DIR$/server/server.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/src/com/commune/server/Program.java" afterPath="$PROJECT_DIR$/server/src/com/commune/server/Program.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,7 +28,7 @@
     <SUITE FILE_PATH="coverage/Commune$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1508955082565" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.46026263">
+    <splitter split-orientation="horizontal" split-proportion="0.6564987">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
           <file leaf-file-name="ConnectionTask.java" pinned="false" current-in-tab="false">
@@ -71,7 +76,7 @@
             <entry file="file://$PROJECT_DIR$/server/src/com/commune/server/ClientConnection.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="470">
-                  <caret line="376" column="21" lean-forward="true" selection-start-line="376" selection-start-column="21" selection-end-line="376" selection-end-column="21" />
+                  <caret line="376" column="21" lean-forward="false" selection-start-line="376" selection-start-column="21" selection-end-line="376" selection-end-column="21" />
                   <folding>
                     <element signature="method#processFileMessage#0;class#ClientConnection#0" expanded="false" />
                     <element signature="method#receiveFile#0;class#ClientConnection#0" expanded="false" />
@@ -90,32 +95,48 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Presence.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/base/src/com/commune/stream/Presence.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="368">
-                  <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="Program.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/server/src/com/commune/server/Program.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="678">
-                  <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+                <state relative-caret-position="138">
+                  <caret line="18" column="7" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="44" selection-end-column="5" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="ChatWindowController.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/ChatWindowController.java">
+          <file leaf-file-name="App.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/App.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1460">
-                  <caret line="143" column="5" lean-forward="true" selection-start-line="143" selection-start-column="5" selection-end-line="143" selection-end-column="5" />
+                <state relative-caret-position="818">
+                  <caret line="68" column="22" lean-forward="true" selection-start-line="68" selection-start-column="22" selection-end-line="68" selection-end-column="22" />
                   <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="LoginWindow.fxml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/LoginWindow.fxml">
+              <provider editor-type-id="JavaFX-Scene-Builder">
+                <state />
+              </provider>
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="552">
+                  <caret line="24" column="49" lean-forward="false" selection-start-line="24" selection-start-column="49" selection-end-line="24" selection-end-column="49" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="LoginWindowController.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/LoginWindowController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="306">
+                  <caret line="43" column="39" lean-forward="false" selection-start-line="43" selection-start-column="39" selection-end-line="43" selection-end-column="39" />
+                  <folding>
+                    <element signature="e#831#832#0" expanded="true" />
+                    <element signature="e#859#860#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -136,22 +157,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/base/src/com/commune/model/User.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="172">
-                  <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#176#177#0" expanded="true" />
-                    <element signature="e#203#204#0" expanded="true" />
-                    <element signature="e#635#636#0" expanded="true" />
-                    <element signature="e#722#723#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="UserListWindowController.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="UserListWindowController.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/UserListWindowController.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="1453">
@@ -178,7 +184,7 @@
             <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/ConnectionTask.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="-92">
-                  <caret line="30" column="6" lean-forward="true" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+                  <caret line="30" column="6" lean-forward="false" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
                   <folding>
                     <element signature="method#processElements#0;class#ConnectionTask#0" expanded="false" />
                     <element signature="method#processMessage#0;class#ConnectionTask#0" expanded="false" />
@@ -242,12 +248,10 @@
         <option value="$PROJECT_DIR$/base/src/stream/Message.java" />
         <option value="$PROJECT_DIR$/src/com/commune/model/User.java" />
         <option value="$PROJECT_DIR$/base/src/com/commune/stream/FileMessage.java" />
-        <option value="$PROJECT_DIR$/client/src/com/commune/client/LoginWindowController.java" />
         <option value="$PROJECT_DIR$/base/src/com/commune/stream/DataElement.java" />
         <option value="$PROJECT_DIR$/base/src/com/commune/stream/Result.java" />
         <option value="$PROJECT_DIR$/client/src/com/commune/client/ChatWindowController.java" />
         <option value="$PROJECT_DIR$/client/src/com/commune/client/UserListWindow.fxml" />
-        <option value="$PROJECT_DIR$/client/src/com/commune/client/App.java" />
         <option value="$PROJECT_DIR$/client/src/com/commune/client/AddFriendWindow.fxml" />
         <option value="$PROJECT_DIR$/base/src/com/commune/stream/InfoQueryElement.java" />
         <option value="$PROJECT_DIR$/base/src/com/commune/stream/BuddyListOperations.java" />
@@ -258,12 +262,16 @@
         <option value="$PROJECT_DIR$/server/src/com/commune/server/UserManagement.java" />
         <option value="$PROJECT_DIR$/server/src/com/commune/server/ClientConnection.java" />
         <option value="$PROJECT_DIR$/client/src/com/commune/client/UserListWindowController.java" />
+        <option value="$PROJECT_DIR$/client/src/com/commune/client/LoginWindow.fxml" />
+        <option value="$PROJECT_DIR$/server/src/com/commune/server/Program.java" />
+        <option value="$PROJECT_DIR$/client/src/com/commune/client/LoginWindowController.java" />
+        <option value="$PROJECT_DIR$/client/src/com/commune/client/App.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="434" />
-    <option name="y" value="390" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="345" />
+    <option name="y" value="86" />
     <option name="width" value="1279" />
     <option name="height" value="1002" />
   </component>
@@ -516,7 +524,14 @@
       <option name="project" value="LOCAL" />
       <updated>1508962800243</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add missing files">
+      <created>1508962950505</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1508962950505</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TodoView">
@@ -529,7 +544,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="345" y="86" width="1279" height="1002" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.559375" order="4" side_tool="false" content_ui="tabs" />
@@ -538,13 +553,13 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21458334" sideWeight="0.3881579" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22697368" sideWeight="0.3125" order="9" side_tool="true" content_ui="tabs" x="0" y="0" width="1295" height="644" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3660508" sideWeight="0.3125" order="9" side_tool="true" content_ui="tabs" x="0" y="0" width="1295" height="644" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22697368" sideWeight="0.6875" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1828125" sideWeight="0.6094771" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32672483" sideWeight="0.6094771" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -591,7 +606,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="milestone 2&#10;file transfer works" />
     <MESSAGE value="beta&#10;99% feature complete&#10;most of the things tested and working" />
-    <option name="LAST_COMMIT_MESSAGE" value="beta&#10;99% feature complete&#10;most of the things tested and working" />
+    <MESSAGE value="add missing files" />
+    <option name="LAST_COMMIT_MESSAGE" value="add missing files" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -600,35 +616,18 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/server/src/com/commune/server/ClientConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2392">
-          <caret line="117" column="53" lean-forward="false" selection-start-line="117" selection-start-column="53" selection-end-line="117" selection-end-column="53" />
-          <folding>
-            <element signature="method#processFileMessage#0;class#ClientConnection#0" expanded="false" />
-            <element signature="method#receiveFile#0;class#ClientConnection#0" expanded="false" />
-            <element signature="method#processResult#0;class#ClientConnection#0" expanded="false" />
-            <element signature="method#processMessage#0;class#ClientConnection#0" expanded="false" />
-            <element signature="method#processPresence#0;class#ClientConnection#0" expanded="false" />
-            <element signature="method#broadcastPresence#0;class#ClientConnection#0" expanded="false" />
-            <element signature="method#transferSubscription#0;class#ClientConnection#0" expanded="false" />
-            <element signature="method#processBuddyListOperations#0;class#ClientConnection#0" expanded="false" />
-            <element signature="method#processBuddyListSearch#0;class#ClientConnection#0" expanded="false" />
-            <element signature="method#close#0;class#ClientConnection#0" expanded="false" />
-            <element signature="method#sendElements#0;class#ClientSendThread#0;class#ClientConnection#0" expanded="false" />
-            <element signature="method#sendFile#0;class#ClientSendThread#0;class#ClientConnection#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/ConnectionTask.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7383">
           <caret line="341" column="0" lean-forward="false" selection-start-line="341" selection-start-column="0" selection-end-line="341" selection-end-column="0" />
           <folding>
-            <element signature="method#processElements#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processPresenceSubscription#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processPresenceUnSubscription#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processPresenceAvailability#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processPresenceResponse#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processMessage#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processResult#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processBuddyListOperations#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processFileMessage#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#receiveFile#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processLoginResult#0;class#ConnectionTask#0" expanded="false" />
@@ -697,9 +696,13 @@
         <state relative-caret-position="184">
           <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="30" selection-end-column="56" />
           <folding>
-            <element signature="method#processElements#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processPresenceSubscription#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processPresenceUnSubscription#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processPresenceAvailability#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processPresenceResponse#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processMessage#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processResult#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processBuddyListOperations#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processFileMessage#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#receiveFile#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processLoginResult#0;class#ConnectionTask#0" expanded="false" />
@@ -886,14 +889,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/LoginWindowController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/ChatWindow.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder">
         <state />
@@ -912,14 +907,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="369">
           <caret line="35" column="12" lean-forward="true" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/App.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="32" column="4" lean-forward="true" selection-start-line="32" selection-start-column="4" selection-end-line="32" selection-end-column="4" />
           <folding />
         </state>
       </provider>
@@ -967,24 +954,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/AddFriendWindowController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="118" column="10" lean-forward="false" selection-start-line="118" selection-start-column="10" selection-end-line="118" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3580#3670#0" expanded="false" />
-            <element signature="e#3754#3755#0" expanded="true" />
-            <element signature="e#3801#3802#0" expanded="true" />
-            <element signature="method#newAddFriendWindow#0;class#AddFriendWindowController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/base/src/com/commune/model/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="172">
-          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding>
             <element signature="e#176#177#0" expanded="true" />
             <element signature="e#203#204#0" expanded="true" />
@@ -997,15 +970,7 @@
     <entry file="file://$PROJECT_DIR$/base/src/com/commune/stream/Presence.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/server/src/com/commune/server/Program.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="678">
-          <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1029,7 +994,7 @@
     <entry file="file://$PROJECT_DIR$/server/src/com/commune/server/ClientConnection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="470">
-          <caret line="376" column="21" lean-forward="true" selection-start-line="376" selection-start-column="21" selection-end-line="376" selection-end-column="21" />
+          <caret line="376" column="21" lean-forward="false" selection-start-line="376" selection-start-column="21" selection-end-line="376" selection-end-column="21" />
           <folding>
             <element signature="method#processFileMessage#0;class#ClientConnection#0" expanded="false" />
             <element signature="method#receiveFile#0;class#ClientConnection#0" expanded="false" />
@@ -1047,33 +1012,91 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/ConnectionTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="223" column="0" lean-forward="false" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
+          <folding>
+            <element signature="method#processPresenceSubscription#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processPresenceUnSubscription#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processPresenceAvailability#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processPresenceResponse#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processMessage#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processResult#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processBuddyListOperations#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processFileMessage#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#receiveFile#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processLoginResult#0;class#ConnectionTask#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/UserListWindowController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="163" column="52" lean-forward="false" selection-start-line="163" selection-start-column="52" selection-end-line="183" selection-end-column="0" />
+        <state relative-caret-position="1453">
+          <caret line="87" column="55" lean-forward="false" selection-start-line="87" selection-start-column="55" selection-end-line="87" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1512#1842#0" expanded="false" />
             <element signature="e#1920#2004#0" expanded="false" />
             <element signature="e#2078#2236#0" expanded="false" />
+            <element signature="e#3210#3418#0" expanded="false" />
             <element signature="class#UserListCell#0;class#UserListWindowController#0" expanded="false" />
-            <element signature="method#newUserListWindow#0;class#UserListWindowController#0" expanded="false" />
+            <element signature="e#5716#5717#0" expanded="true" />
+            <element signature="e#5773#5774#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/ConnectionTask.java">
+    <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/AddFriendWindowController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-92">
-          <caret line="30" column="6" lean-forward="true" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+        <state relative-caret-position="351">
+          <caret line="118" column="10" lean-forward="false" selection-start-line="118" selection-start-column="10" selection-end-line="118" selection-end-column="10" />
           <folding>
-            <element signature="method#processElements#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processMessage#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processResult#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processFileMessage#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#receiveFile#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processLoginResult#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#3580#3670#0" expanded="false" />
+            <element signature="e#3754#3755#0" expanded="true" />
+            <element signature="e#3801#3802#0" expanded="true" />
+            <element signature="method#newAddFriendWindow#0;class#AddFriendWindowController#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server/src/com/commune/server/Program.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="138">
+          <caret line="18" column="7" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="44" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/LoginWindowController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="43" column="39" lean-forward="false" selection-start-line="43" selection-start-column="39" selection-end-line="43" selection-end-column="39" />
+          <folding>
+            <element signature="e#831#832#0" expanded="true" />
+            <element signature="e#859#860#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/LoginWindow.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="552">
+          <caret line="24" column="49" lean-forward="false" selection-start-line="24" selection-start-column="49" selection-end-line="24" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="818">
+          <caret line="68" column="22" lean-forward="true" selection-start-line="68" selection-start-column="22" selection-end-line="68" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>

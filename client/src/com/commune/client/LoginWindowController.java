@@ -5,6 +5,7 @@ import com.commune.utils.Util;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -40,7 +41,8 @@ public class LoginWindowController implements WindowController{
     protected void onLoginButtonAction(ActionEvent actionEvent) {
 
         try {
-            App.Socket = new Socket("127.0.0.1", 4074);
+            System.out.println(App.port);
+            App.Socket = new Socket(App.server, App.port);
             App.Socket.setKeepAlive(true);
 
             App.SendTask = new SendTask();

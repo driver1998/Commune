@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="base" />
     <orderEntry type="library" name="mysql-connector-java-5.1.44-bin" level="project" />
+    <orderEntry type="library" name="dom4j-2.1.0" level="project" />
   </component>
 </module>

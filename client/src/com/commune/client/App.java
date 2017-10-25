@@ -9,7 +9,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -35,7 +41,32 @@ public class App extends Application {
     final static ArrayList<String> RequestIDs = new ArrayList<>();
     final static ArrayList<DataElement> ElementSendQueue = new ArrayList<>();
 
+    //默认值
+    static String server = "127.0.0.1";
+    static int port = 4074;
+
+    static void getSettings() {
+        try {
+            BufferedReader reader =new BufferedReader(new FileReader("commune.config"));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            Document document = DocumentHelper.parseText(sb.toString());
+            Element root = document.getRootElement();
+            Element serverElement = root.element("client");
+            server = serverElement.element("server").getText();
+            port = Integer.valueOf(serverElement.element("port").getText());
+
+        } catch (IOException | DocumentException ex) {
+            ex.printStackTrace();
+        }
+
+    }
     public static void main(String[] args) {
+        getSettings();
         launch(args);
     }
 

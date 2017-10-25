@@ -1,6 +1,11 @@
 package com.commune.server;
 import com.commune.stream.*;
 import com.commune.model.User;
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+
+import org.dom4j.Document;
+import org.dom4j.Element;
 
 import java.io.*;
 import java.net.*;
@@ -11,11 +16,37 @@ import java.util.HashMap;
 public class Program {
     volatile static HashMap<String, ClientConnection> Clients;
 
+    //默认值
+    private static String url = "jdbc:mysql://localhost:3306/COMMUNE?characterEncoding=utf8&useSSL=true";
+    private static String user = "root";
+    private static String password = "p@ssw0rd";
+    private static int port = 4074;
+
+    static void getSettings() {
+        try {
+            BufferedReader reader =new BufferedReader(new FileReader("server.config"));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            Document document = DocumentHelper.parseText(sb.toString());
+            Element root = document.getRootElement();
+            Element serverElement = root.element("server");
+            url = serverElement.element("url").getText();
+            user = serverElement.element("user").getText();
+            password = serverElement.element("password").getText();
+            port = Integer.valueOf(serverElement.element("port").getText());
+        } catch (IOException | DocumentException ex) {
+            ex.printStackTrace();
+        }
+
+    }
+
     //获取数据库连接
-    public static java.sql.Connection connectDatabase() throws SQLException{
-        String url = "jdbc:mysql://localhost:3306/COMMUNE?characterEncoding=utf8&useSSL=true";
-        String user = "root";
-        String password = "p@ssw0rd";
+    static java.sql.Connection connectDatabase() throws SQLException{
+
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -28,7 +59,9 @@ public class Program {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
+        getSettings();
+
         System.out.println("Project Commune Server");
         System.out.println("Build 20171017");
         System.out.println();
@@ -38,7 +71,6 @@ public class Program {
     }
 
     private static void listen() throws IOException{
-        int port = 4074;
         ServerSocket server = new ServerSocket(port);
 
         Clients = new HashMap<>();

@@ -30,11 +30,11 @@
     <HBox alignment="BASELINE_RIGHT" GridPane.columnSpan="2" GridPane.rowIndex="6">
 
         <Button text="登录" onAction="#onLoginButtonAction">
-            <HBox.margin>
+            <!--HBox.margin>
                 <Insets right="10"/>
-            </HBox.margin>
+            </HBox.margin-->
         </Button>
-        <Button text="注册"/>
+        <!--Button text="注册"/-->
     </HBox>
 </GridPane>
 
