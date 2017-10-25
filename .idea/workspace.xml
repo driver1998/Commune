@@ -7,22 +7,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="27f49495-8e73-422e-94e3-a539321abde0" name="Default" comment="milestone 2&#10;file transfer works">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/src/com/commune/client/AddFriendWindow.fxml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/src/com/commune/client/FileSendWindow.fxml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/client/src/com/commune/client/FileSendWindowController.java" afterPath="" />
+    <list default="true" id="27f49495-8e73-422e-94e3-a539321abde0" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/client/src/com/commune/client/AddFriendWindowController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/src/com/commune/model/User.java" afterPath="$PROJECT_DIR$/base/src/com/commune/model/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/src/com/commune/stream/BuddyListOperations.java" afterPath="$PROJECT_DIR$/base/src/com/commune/stream/BuddyListOperations.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/src/com/commune/stream/InfoQueryElement.java" afterPath="$PROJECT_DIR$/base/src/com/commune/stream/InfoQueryElement.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/src/com/commune/stream/Presence.java" afterPath="$PROJECT_DIR$/base/src/com/commune/stream/Presence.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/com/commune/client/App.java" afterPath="$PROJECT_DIR$/client/src/com/commune/client/App.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/com/commune/client/ChatWindowController.java" afterPath="$PROJECT_DIR$/client/src/com/commune/client/ChatWindowController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/com/commune/client/ConnectionTask.java" afterPath="$PROJECT_DIR$/client/src/com/commune/client/ConnectionTask.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/com/commune/client/UserListWindow.fxml" afterPath="$PROJECT_DIR$/client/src/com/commune/client/UserListWindow.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/src/com/commune/client/UserListWindowController.java" afterPath="$PROJECT_DIR$/client/src/com/commune/client/UserListWindowController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/src/com/commune/server/ClientConnection.java" afterPath="$PROJECT_DIR$/server/src/com/commune/server/ClientConnection.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/src/com/commune/server/UserManagement.java" afterPath="$PROJECT_DIR$/server/src/com/commune/server/UserManagement.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,7 +23,7 @@
     <SUITE FILE_PATH="coverage/Commune$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1508955082565" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5791292">
+    <splitter split-orientation="horizontal" split-proportion="0.46026263">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
           <file leaf-file-name="ConnectionTask.java" pinned="false" current-in-tab="false">
@@ -167,7 +154,7 @@
           <file leaf-file-name="UserListWindowController.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/UserListWindowController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="450">
+                <state relative-caret-position="1453">
                   <caret line="87" column="55" lean-forward="false" selection-start-line="87" selection-start-column="55" selection-end-line="87" selection-end-column="55" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -190,8 +177,8 @@
           <file leaf-file-name="ConnectionTask.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/ConnectionTask.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="470">
-                  <caret line="236" column="11" lean-forward="true" selection-start-line="236" selection-start-column="11" selection-end-line="236" selection-end-column="11" />
+                <state relative-caret-position="-92">
+                  <caret line="30" column="6" lean-forward="true" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
                   <folding>
                     <element signature="method#processElements#0;class#ConnectionTask#0" expanded="false" />
                     <element signature="method#processMessage#0;class#ConnectionTask#0" expanded="false" />
@@ -522,7 +509,14 @@
       <option name="project" value="LOCAL" />
       <updated>1508934468340</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="beta&#10;99% feature complete&#10;most of the things tested and working">
+      <created>1508962800243</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1508962800243</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -536,7 +530,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.559375" order="4" side_tool="false" content_ui="tabs" />
@@ -545,13 +538,13 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21458334" sideWeight="0.3881579" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43311402" sideWeight="0.3125" order="9" side_tool="true" content_ui="tabs" x="0" y="0" width="1295" height="644" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43311402" sideWeight="0.6875" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22697368" sideWeight="0.3125" order="9" side_tool="true" content_ui="tabs" x="0" y="0" width="1295" height="644" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22697368" sideWeight="0.6875" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296875" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24635416" sideWeight="0.6094771" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1828125" sideWeight="0.6094771" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -597,7 +590,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="milestone 2&#10;file transfer works" />
-    <option name="LAST_COMMIT_MESSAGE" value="milestone 2&#10;file transfer works" />
+    <MESSAGE value="beta&#10;99% feature complete&#10;most of the things tested and working" />
+    <option name="LAST_COMMIT_MESSAGE" value="beta&#10;99% feature complete&#10;most of the things tested and working" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -632,13 +626,9 @@
         <state relative-caret-position="7383">
           <caret line="341" column="0" lean-forward="false" selection-start-line="341" selection-start-column="0" selection-end-line="341" selection-end-column="0" />
           <folding>
-            <element signature="method#processPresenceSubscription#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processPresenceUnSubscription#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processPresenceAvailability#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processPresenceResponse#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processElements#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processMessage#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processResult#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processBuddyListOperations#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processFileMessage#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#receiveFile#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processLoginResult#0;class#ConnectionTask#0" expanded="false" />
@@ -707,13 +697,9 @@
         <state relative-caret-position="184">
           <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="30" selection-end-column="56" />
           <folding>
-            <element signature="method#processPresenceSubscription#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processPresenceUnSubscription#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processPresenceAvailability#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processPresenceResponse#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processElements#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processMessage#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processResult#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processBuddyListOperations#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processFileMessage#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#receiveFile#0;class#ConnectionTask#0" expanded="false" />
             <element signature="method#processLoginResult#0;class#ConnectionTask#0" expanded="false" />
@@ -1032,25 +1018,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/ConnectionTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="223" column="0" lean-forward="false" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
-          <folding>
-            <element signature="method#processPresenceSubscription#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processPresenceUnSubscription#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processPresenceAvailability#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processPresenceResponse#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processMessage#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processResult#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processBuddyListOperations#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processFileMessage#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#receiveFile#0;class#ConnectionTask#0" expanded="false" />
-            <element signature="method#processLoginResult#0;class#ConnectionTask#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/server/src/com/commune/server/UserManagement.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2461">
@@ -1082,17 +1049,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/UserListWindowController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="87" column="55" lean-forward="false" selection-start-line="87" selection-start-column="55" selection-end-line="87" selection-end-column="55" />
+        <state relative-caret-position="80">
+          <caret line="163" column="52" lean-forward="false" selection-start-line="163" selection-start-column="52" selection-end-line="183" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1512#1842#0" expanded="false" />
             <element signature="e#1920#2004#0" expanded="false" />
             <element signature="e#2078#2236#0" expanded="false" />
-            <element signature="e#3210#3418#0" expanded="false" />
             <element signature="class#UserListCell#0;class#UserListWindowController#0" expanded="false" />
-            <element signature="e#5716#5717#0" expanded="true" />
-            <element signature="e#5773#5774#0" expanded="true" />
+            <element signature="method#newUserListWindow#0;class#UserListWindowController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/src/com/commune/client/ConnectionTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-92">
+          <caret line="30" column="6" lean-forward="true" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+          <folding>
+            <element signature="method#processElements#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processMessage#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processResult#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processFileMessage#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#receiveFile#0;class#ConnectionTask#0" expanded="false" />
+            <element signature="method#processLoginResult#0;class#ConnectionTask#0" expanded="false" />
           </folding>
         </state>
       </provider>
