@@ -14,6 +14,7 @@ public class BuddyListOperations implements InfoQueryElement{
     private User to;
     private String id;
     private String operation;
+    private String keyword;
     private List<User> items;
 
     public String getId() {
@@ -36,7 +37,12 @@ public class BuddyListOperations implements InfoQueryElement{
         return to;
     }
 
+    public String getKeyword() {
+        return keyword;
+    }
+
     public static final String OPERATION_NS_QUERY = "iq:buddy:query";
+    public static final String OPERATION_NS_SEARCH = "iq:buddy:search";
     public static final String OPERATION_NS_ADD = "iq:buddy:add";
     public static final String OPERATION_NS_DELETE = "iq:buddy:remove";
 
@@ -48,16 +54,27 @@ public class BuddyListOperations implements InfoQueryElement{
         this.to = to;
     }
 
+    public BuddyListOperations(User from, User to, String id, String operation, String keyword, List<User> items) {
+        this.items = items;
+        this.operation = operation;
+        this.id = id;
+        this.from = from;
+        this.to = to;
+        this.keyword = keyword;
+    }
+
     public String getXML() {
         Namespace namespace = DocumentHelper.createNamespace("", operation);
         Element iqElement = DocumentHelper.createElement("iq").addAttribute("id", id);
 
-        if (from!=null)
-            iqElement.addAttribute("from", from.getName());
-        else
-            if (to!=null) iqElement.addAttribute("to", to.getName());
+        if (from!=null) iqElement.addAttribute("from", from.getName());
+        if (to!=null) iqElement.addAttribute("to", to.getName());
 
         Element queryElement = iqElement.addElement(new QName("query", namespace));
+
+        if (operation.equals(BuddyListOperations.OPERATION_NS_SEARCH)) {
+            queryElement.addAttribute("keyword", keyword);
+        }
 
         if (items != null) {
             for (User u : items) {
@@ -75,14 +92,13 @@ public class BuddyListOperations implements InfoQueryElement{
 
         User from = null;
         User to = null;
-        if (fromID != null && !fromID.isEmpty())
-            from = new User(fromID);
-        else
-            if (toID != null && !toID.isEmpty()) to = new User(toID);
-
+        if (fromID != null && !fromID.isEmpty()) from = new User(fromID);
+        if (toID != null && !toID.isEmpty()) to = new User(toID);
 
         Element queryElement = iqElement.element("query");
         String operation = queryElement.getNamespaceURI();
+
+        String keyword = queryElement.attributeValue("keyword");
 
         List<User> users = new ArrayList<>();
 
@@ -96,7 +112,7 @@ public class BuddyListOperations implements InfoQueryElement{
         }
 
         if (users.isEmpty()) users = null;
-        return new BuddyListOperations(from, to, id, operation, users);
+        return new BuddyListOperations(from, to, id, operation, keyword, users);
     }
 
 }

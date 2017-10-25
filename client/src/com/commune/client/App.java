@@ -20,7 +20,7 @@ public class App extends Application {
     static HashMap<String, WindowController> WindowControllers;
     static final String CONTROLLER_LOGIN_WINDOW = "CONTROLLER_LOGIN_WINDOW";
     static final String CONTROLLER_USER_LIST_WINDOW = "CONTROLLER_USER_LIST_WINDOW";
-
+    static final String CONTROLLER_ADD_FRIEND_WINDOW = "CONTROLLER_ADD_FRIEND_WINDOW";
 
     static User CurrentUser;
     static Socket Socket;
@@ -30,10 +30,10 @@ public class App extends Application {
     static Thread ConnectionThread;
     static ConnectionTask ConnectionTask;
 
-    static ObservableList<User> userList = FXCollections.observableArrayList();
+    static ObservableList<User> UserList = FXCollections.observableArrayList();
 
     final static ArrayList<String> RequestIDs = new ArrayList<>();
-    public final static ArrayList<DataElement> ElementSendQueue = new ArrayList<>();
+    final static ArrayList<DataElement> ElementSendQueue = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);

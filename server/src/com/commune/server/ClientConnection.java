@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 //与客户端交互的类
 public class ClientConnection implements AutoCloseable{
@@ -68,6 +69,8 @@ public class ClientConnection implements AutoCloseable{
                 processFileMessage((FileMessage)element);
             } else if (element instanceof Result) {
                 processResult((Result)element);
+            } else if (element instanceof Presence) {
+                processPresence((Presence)element);
             }
         } catch (InvalidElementException e) {
             Result result = new Result("", "", Result.TYPE_ERROR, Result.BODY_INVALID_ELEMENT);
@@ -92,6 +95,7 @@ public class ClientConnection implements AutoCloseable{
                 ElementSendQueue.add(result);
                 ElementSendQueue.notify();
             }
+            return;
         }
 
         //如果收件人不在线，打回去
@@ -135,7 +139,7 @@ public class ClientConnection implements AutoCloseable{
         try (FileOutputStream fileOutputStream = new FileOutputStream(tmpFile)){
 
             BufferedInputStream inputStream = new BufferedInputStream(socket.getInputStream());
-            //socket.setSoTimeout(4000);
+            socket.setSoTimeout(4000); //临时设置一个超时
 
             long fileSize = message.getSize();
             long receivedLength = 0;
@@ -151,7 +155,7 @@ public class ClientConnection implements AutoCloseable{
             }
             System.out.println("file received.");
 
-            //ddrisocket.setSoTimeout(0);
+            socket.setSoTimeout(0);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -209,6 +213,7 @@ public class ClientConnection implements AutoCloseable{
                 ElementSendQueue.add(result);
                 ElementSendQueue.notify();
             }
+            return;
         }
 
         String to = message.getTo().getName();
@@ -222,9 +227,107 @@ public class ClientConnection implements AutoCloseable{
         }
     }
 
+    //处理presence
+    private void processPresence(Presence presence) {
+        switch (presence.getType()) {
+            case Presence.TYPE_AVAILABLE:
+            case Presence.TYPE_UNAVAILABLE:
+                broadcastPresence(presence);
+                break;
+            case Presence.TYPE_SUBSCRIBE:
+            case Presence.TYPE_UNSUBSCRIBE:
+            case Presence.TYPE_ACCEPT:
+            case Presence.TYPE_REJECT:
+                transferSubscription(presence);
+                break;
+        }
+    }
+    //广播上下线信息
+    private void broadcastPresence(Presence presence) {
+        if (presence.getFrom() == null) {
+            Result result = new Result("", "", Result.TYPE_ERROR, Result.BODY_INVALID_ELEMENT);
+
+            synchronized (ElementSendQueue) {
+                ElementSendQueue.add(result);
+                ElementSendQueue.notify();
+            }
+            return;
+        }
+
+        try {
+            List<User> buddyList = UserManagement.getBuddyList(presence.getFrom());
+
+            for(User u: buddyList) {
+                String to = u.getName();
+                if (Program.Clients.containsKey(to)) {
+                    ClientConnection toConnection = Program.Clients.get(to);
+
+                    synchronized (toConnection.ElementSendQueue) {
+                        toConnection.ElementSendQueue.add(presence);
+                        toConnection.ElementSendQueue.notify();
+                    }
+                }
+            }
+        } catch (SQLException | User.WrongUsernameOrPasswordException ex) {
+            ex.printStackTrace();
+        }
+    }
+    //转发好友请求
+    private void transferSubscription(Presence presence) {
+        if (presence.getTo() == null) {
+            Result result = new Result("", "", Result.TYPE_ERROR, Result.BODY_INVALID_ELEMENT);
+
+            synchronized (ElementSendQueue) {
+                ElementSendQueue.add(result);
+                ElementSendQueue.notify();
+            }
+            return;
+        }
+
+        User from = presence.getFrom();
+        User to = presence.getTo();
+
+        String toName = to.getName();
+        if (Program.Clients.containsKey(toName)) {
+            ClientConnection toConnection = Program.Clients.get(toName);
+
+            synchronized (toConnection.ElementSendQueue) {
+                toConnection.ElementSendQueue.add(presence);
+                toConnection.ElementSendQueue.notify();
+            }
+        }
+
+        try {
+            if (presence.getType().equals(Presence.TYPE_ACCEPT)) {
+                //添加好友并获得许可
+                List<User> fromBuddyList = UserManagement.getBuddyList(from);
+                fromBuddyList.add(to);
+
+                List<User> toBuddyList = UserManagement.getBuddyList(to);
+                toBuddyList.add(from);
+
+                UserManagement.updateBuddyList(from, fromBuddyList);
+                UserManagement.updateBuddyList(to, toBuddyList);
+            }
+
+            if (presence.getType().equals(Presence.TYPE_UNSUBSCRIBE)) {
+                //删除好友
+                List<User> fromBuddyList = UserManagement.getBuddyList(from);
+                fromBuddyList.removeIf(u -> u.equals(to));
+
+                List<User> toBuddyList = UserManagement.getBuddyList(to);
+                toBuddyList.removeIf(u -> u.equals(from));
+
+                UserManagement.updateBuddyList(from, fromBuddyList);
+                UserManagement.updateBuddyList(to, toBuddyList);
+            }
+        } catch (SQLException | User.WrongUsernameOrPasswordException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     //处理好友列表操作指令
     private void processBuddyListOperations(BuddyListOperations operations) {
-
         if (operations.getFrom() == null) {
             Result result = new Result("", "", Result.TYPE_ERROR, Result.BODY_INVALID_ELEMENT);
 
@@ -232,28 +335,47 @@ public class ClientConnection implements AutoCloseable{
                 ElementSendQueue.add(result);
                 ElementSendQueue.notify();
             }
+            return;
         }
 
+        switch (operations.getOperation()) {
+            case BuddyListOperations.OPERATION_NS_QUERY:
+                processBuddyListQuery(operations);
+                break;
+            case BuddyListOperations.OPERATION_NS_ADD:
+                break;
+            case BuddyListOperations.OPERATION_NS_DELETE:
+                break;
+            case BuddyListOperations.OPERATION_NS_SEARCH:
+                processBuddyListSearch(operations);
+                break;
+        }
+    }
+    private void processBuddyListQuery(BuddyListOperations operations) {
         try {
             List<User> buddyList = UserManagement.getBuddyList(operations.getFrom());
-            switch (operations.getOperation()) {
-                case BuddyListOperations.OPERATION_NS_QUERY:
-                    BuddyListOperations result =
-                            new BuddyListOperations(null,
-                                    operations.getFrom(),
-                                    operations.getId(),
-                                    operations.getOperation(),
-                                    buddyList);
 
+            //获取好友列表
+            BuddyListOperations result = new BuddyListOperations(null,
+                    operations.getFrom(),
+                    operations.getId(),
+                    operations.getOperation(),
+                    buddyList);
+
+            synchronized (ElementSendQueue) {
+                ElementSendQueue.add(result);
+                ElementSendQueue.notify();
+            }
+
+            //发送当前在线的好友
+            for (User u: buddyList) {
+                if (Program.Clients.containsKey(u.getName())) {
+                    Presence presence = new Presence(u, null, Presence.TYPE_AVAILABLE);
                     synchronized (ElementSendQueue) {
-                        ElementSendQueue.add(result);
+                        ElementSendQueue.add(presence);
                         ElementSendQueue.notify();
                     }
-                    break;
-                case BuddyListOperations.OPERATION_NS_ADD:
-                    break;
-                case BuddyListOperations.OPERATION_NS_DELETE:
-                    break;
+                }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -264,6 +386,33 @@ public class ClientConnection implements AutoCloseable{
                 ElementSendQueue.add(result);
                 ElementSendQueue.notify();
             }
+        }
+    }
+    private void processBuddyListSearch(BuddyListOperations operations) {
+
+        try {
+            List<User> userList = UserManagement.getUserList();
+
+            //查询符合条件的用户
+            String keyword = operations.getKeyword();
+
+            //清除不符合条件的项
+            if (keyword != null && !keyword.isEmpty())
+                userList.removeIf( u -> !(u.getName().contains(keyword)) );
+
+            BuddyListOperations result = new BuddyListOperations(null,
+                    operations.getFrom(),
+                    operations.getId(),
+                    operations.getOperation(),
+                    operations.getKeyword(),
+                    userList);
+
+            synchronized (ElementSendQueue) {
+                ElementSendQueue.add(result);
+                ElementSendQueue.notify();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
 
     }

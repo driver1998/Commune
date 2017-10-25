@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.Socket;
 import java.util.Iterator;
-import java.util.Observable;
 import java.util.Optional;
 
 import static com.commune.client.App.ElementSendQueue;
@@ -134,7 +133,7 @@ class ConnectionTask extends Task<Integer> {
             } else if (element instanceof Message) {
                 processMessage((Message)element);
             } else if (element instanceof Presence) {
-
+                processPresence((Presence)element);
             } else if (element instanceof BuddyListOperations) {
                 processBuddyListOperations((BuddyListOperations)element);
             } else if (element instanceof FileMessage) {
@@ -143,6 +142,99 @@ class ConnectionTask extends Task<Integer> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void processPresence(Presence presence) {
+        switch (presence.getType()) {
+            case Presence.TYPE_AVAILABLE:
+            case Presence.TYPE_UNAVAILABLE:
+                processPresenceAvailability(presence); //上下线
+                break;
+            case Presence.TYPE_ACCEPT:
+            case Presence.TYPE_REJECT:
+                processPresenceResponse(presence); //加好友，对方是否同意的反馈
+                break;
+            case Presence.TYPE_SUBSCRIBE:
+                processPresenceSubscription(presence); //收到好友请求
+                break;
+            case Presence.TYPE_UNSUBSCRIBE:
+                processPresenceUnSubscription(presence); //收到被删除好友的通知
+                break;
+        }
+    }
+    private void processPresenceSubscription(Presence presence) {
+        Platform.runLater(()->{
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    presence.getFrom() + " 正请求与你成为好友，是否同意？",
+                    ButtonType.YES, ButtonType.NO);
+
+            Optional<ButtonType> responce = alert.showAndWait();
+
+            String type;
+            if (responce.isPresent() && responce.get().equals(ButtonType.YES)) {
+                type = Presence.TYPE_ACCEPT;
+
+                if (App.UserList != null) {
+                    User user = presence.getFrom();
+                    user.setOnline(true);
+                    App.UserList.add(user);
+                }
+            } else {
+                type = Presence.TYPE_REJECT;
+            }
+            Presence result = new Presence(App.CurrentUser, presence.getFrom(), type);
+            synchronized (ElementSendQueue) {
+                ElementSendQueue.add(result);
+                ElementSendQueue.notify();
+            }
+        });
+    }
+    private void processPresenceUnSubscription(Presence presence) {
+        Platform.runLater(()->{
+            if (App.UserList != null) {
+                int len = App.UserList.size();
+                for (int i=0; i<len; i++) {
+                    User user = App.UserList.get(i);
+                    if (user.equals(presence.getFrom())) {
+                        App.UserList.remove(i);
+                    }
+                }
+            }
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                    presence.getFrom() + " 已将你从好友列表中删除。");
+            alert.show();
+        });
+    }
+    private void processPresenceAvailability(Presence presence) {
+        Platform.runLater(()->{
+            if (App.UserList != null) {
+                int len = App.UserList.size();
+                for (int i=0; i<len; i++) {
+                    User user = App.UserList.get(i);
+                    if (user.equals(presence.getFrom())) {
+                        User newUser = new User(user.getName());
+                        newUser.setOnline(presence.getType().equals(Presence.TYPE_AVAILABLE));
+                        App.UserList.set(i, newUser);
+                    }
+                }
+            }
+        });
+    }
+    private void processPresenceResponse(Presence presence) {
+        Platform.runLater(()->{
+            Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                    presence.getFrom() + " 已将你添加为好友。");
+            alert.show();
+
+            if (presence.getType().equals(Presence.TYPE_ACCEPT)) {
+                if (App.UserList != null) {
+                    User user = presence.getFrom();
+                    user.setOnline(true);
+                    App.UserList.add(user);
+                }
+            }
+        });
     }
 
     //接收message，然后选取相应的聊天窗口，把它显示出来
@@ -235,12 +327,31 @@ class ConnectionTask extends Task<Integer> {
             RequestIDs.remove(operations.getId());
         }
 
-        //QUERY 返回好友列表
-        if (operations.getOperation().equals(BuddyListOperations.OPERATION_NS_QUERY)) {
-            if (App.userList!=null) {
-                App.userList.clear();
-                App.userList.setAll(operations.getItems());
-            }
+        switch (operations.getOperation()) {
+            case BuddyListOperations.OPERATION_NS_QUERY:
+                //QUERY 返回好友列表
+                Platform.runLater(()->{
+                    if (App.UserList!=null) {
+                        App.UserList.clear();
+                        App.UserList.setAll(operations.getItems());
+                    }
+                });
+                break;
+            case BuddyListOperations.OPERATION_NS_SEARCH:
+                //SEARCH 返回符合条件的用户
+                //要是添加好友窗口已经关掉了，那就没意义了
+                if (App.WindowControllers.
+                        containsKey(App.CONTROLLER_ADD_FRIEND_WINDOW)) {
+
+                    AddFriendWindowController controller = (AddFriendWindowController)
+                            App.WindowControllers.get(App.CONTROLLER_ADD_FRIEND_WINDOW);
+
+                    Platform.runLater(()->{
+                        controller.getUserList().clear();
+                        controller.getUserList().setAll(operations.getItems());
+                    });
+                }
+                break;
         }
     }
 
@@ -255,6 +366,7 @@ class ConnectionTask extends Task<Integer> {
         System.out.println("receive fileImage from" + from);
 
         Platform.runLater( () -> {
+            //这个锁是为了让UI线程与ConnectionTask同步...要是java有await/async那该多好...
             synchronized (file) {
                 //获取发送者对应的聊天窗口，并把它拉到前台
                 ChatWindowController controller;
@@ -289,11 +401,13 @@ class ConnectionTask extends Task<Integer> {
             }
         });
 
-
+        //这个锁是为了让UI线程与ConnectionTask同步...要是java有await/async那该多好...
         synchronized (file) {
 
+            //file本来是空的，等UI线程选择好文件之后file就有东西了
             if (file[0] == null) {
                 try {
+
                     file.wait();
                 } catch (InterruptedException ex) {
                     return;
@@ -330,7 +444,7 @@ class ConnectionTask extends Task<Integer> {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)){
 
             BufferedInputStream inputStream = new BufferedInputStream(socket.getInputStream());
-            //socket.setSoTimeout(4000); //临时设置一个超时
+            socket.setSoTimeout(4000); //临时设置一个超时
 
             long fileSize = message.getSize();
             long receivedLength = 0;
@@ -346,7 +460,7 @@ class ConnectionTask extends Task<Integer> {
             }
             System.out.println("file received.");
 
-            //socket.setSoTimeout(0);
+            socket.setSoTimeout(0);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -354,47 +468,23 @@ class ConnectionTask extends Task<Integer> {
 
     //登陆成功之后执行的操作
     private void processLoginResult(Result result) {
-        User user = new User(result.getTo());
+        App.CurrentUser = new User(result.getTo());
 
-        Presence presence = new Presence(user, null, Presence.TYPE_AVAILABLE);
+        Presence presence = new Presence(App.CurrentUser, null, Presence.TYPE_AVAILABLE);
 
         synchronized (App.ElementSendQueue) {
             App.ElementSendQueue.add(presence);
             App.ElementSendQueue.notify();
         }
 
-        Platform.runLater( () -> loginCallback(user) );
-    }
-    private void loginCallback(User user){
-        if (App.WindowControllers.containsKey(App.CONTROLLER_LOGIN_WINDOW)) {
-            WindowController controller = App.WindowControllers.get(App.CONTROLLER_LOGIN_WINDOW);
-            App.WindowControllers.remove(App.CONTROLLER_LOGIN_WINDOW);
-            controller.getStage().close();
-        }
+        Platform.runLater( () -> {
+            if (App.WindowControllers.containsKey(App.CONTROLLER_LOGIN_WINDOW)) {
+                WindowController controller = App.WindowControllers.get(App.CONTROLLER_LOGIN_WINDOW);
+                App.WindowControllers.remove(App.CONTROLLER_LOGIN_WINDOW);
+                controller.getStage().close();
+            }
 
-        App.CurrentUser = user;
-
-        try {
-            Stage stage = new Stage();
-
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserListWindow.fxml"));
-            Parent root = fxmlLoader.load();
-            Scene scene = new Scene(root, 300, 600);
-            stage.setScene(scene);
-
-            UserListWindowController controller= fxmlLoader.getController();
-            controller.setScene(scene);
-            controller.setStage(stage);
-            App.WindowControllers.put(App.CONTROLLER_USER_LIST_WINDOW, controller);
-
-            stage.setMaxWidth(300);
-            stage.setMinWidth(300);
-            stage.setOnCloseRequest(controller.UserListWindowCloseEventHandler);
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            App.WindowControllers.remove(App.CONTROLLER_USER_LIST_WINDOW);
-        }
+            UserListWindowController.newUserListWindow(getClass());
+        } );
     }
 }

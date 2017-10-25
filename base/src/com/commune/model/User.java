@@ -23,7 +23,7 @@ public class User {
     }
 
     public void setOnline(boolean online) {
-        online = online;
+        this.online = online;
     }
 
     public boolean isOnline() {
@@ -34,6 +34,10 @@ public class User {
         return getName();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof User) && getName().equals(((User)obj).getName());
+    }
 
     public static class UserNameConflictException extends Exception {
         public UserNameConflictException(String msg) { super(msg); }

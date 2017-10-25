@@ -7,6 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.commune.client.UserListWindowController">
@@ -32,5 +33,11 @@
         <ListView fx:id="userListView" onMouseClicked="#handleUserListViewClick">
         </ListView>
     </center>
-
+    <bottom>
+        <Button text="菜单" fx:id="menuButton" onAction="#handleMenuButtonAction">
+            <BorderPane.margin>
+                <Insets top="10"/>
+            </BorderPane.margin>
+        </Button>
+    </bottom>
 </BorderPane>

@@ -3,11 +3,6 @@ package com.commune.stream;
 import org.dom4j.*;
 
 public interface InfoQueryElement extends DataElement {
-    String TYPE_SET = "set";
-    String TYPE_GET = "get";
-    String TYPE_RESULT = "result";
-    String TYPE_ERROR = "error";
-
     static InfoQueryElement getElement(String xmlString) throws InvalidElementException {
         try {
             Document document = DocumentHelper.parseText(xmlString);
@@ -25,6 +20,7 @@ public interface InfoQueryElement extends DataElement {
                 case BuddyListOperations.OPERATION_NS_ADD:
                 case BuddyListOperations.OPERATION_NS_DELETE:
                 case BuddyListOperations.OPERATION_NS_QUERY:
+                case BuddyListOperations.OPERATION_NS_SEARCH:
                     return BuddyListOperations.parseXML(iqElement);
                 default:
                     throw new InvalidElementException("格式错误");

@@ -131,6 +131,7 @@ public class ChatWindowController implements Initializable, WindowController{
             controller.setTo(to);
             controller.setScene(scene);
             controller.setStage(stage);
+            stage.setOnCloseRequest(controller.ChatWindowCloseEventHandler);
             App.WindowControllers.put("USER_" + to.getName(), controller);
 
             stage.show();

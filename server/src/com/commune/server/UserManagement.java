@@ -84,7 +84,6 @@ public class UserManagement {
 
             //hash2不匹配 登录失败
             if (!hash2.equals(generatedHash2)) throw new User.WrongUsernameOrPasswordException("用户名或密码错误.");
-
             return new User(username);
 
         } finally {
@@ -97,6 +96,7 @@ public class UserManagement {
         }
     }
 
+    //获取好友列表
     public static List<User> getBuddyList(User user) throws SQLException, User.WrongUsernameOrPasswordException{
         try (Connection connection = Program.connectDatabase()) {
             String sql = "SELECT buddyList FROM Users WHERE username=?";
@@ -104,14 +104,64 @@ public class UserManagement {
             statement1.setString(1, user.getName());
             ResultSet resultSet = statement1.executeQuery();
 
+            //用户不存在
             if (!resultSet.next()) throw new User.WrongUsernameOrPasswordException("用户名无效");
 
+            //buddyList值是uid的范围，如1,2,3,6
             String buddyListString = resultSet.getString("buddyList");
 
+            //没好友 返回空列表
+            if (buddyListString == null || buddyListString.isEmpty()) return new ArrayList<>();
+
+            //因为IN语法很难参数化...所以...
             sql = "SELECT username FROM Users WHERE uid IN (@buddyList)"
                     .replace("@buddyList", buddyListString);
             PreparedStatement statement2 = connection.prepareStatement(sql);
             resultSet = statement2.executeQuery();
+
+            List<User> list = new ArrayList<>();
+            while (resultSet.next()) {
+                list.add(new User(resultSet.getString("username")));
+            }
+
+            return list;
+        }
+    }
+
+    static void updateBuddyList(User user, List<User> buddyList) throws SQLException{
+        try (Connection connection = Program.connectDatabase()) {
+            //把buddyList转为逗号分隔
+            StringBuilder sb = new StringBuilder();
+            for (User u: buddyList) {
+                sb.append("'").append(u.getName()).append("',");
+            }
+            sb.append("''"); //占位符
+
+            //再转为uid的逗号分隔序列
+            String sql = "SELECT uid FROM Users WHERE username IN (?)".replace("?", sb.toString());
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            sb = new StringBuilder();
+            while (resultSet.next()) {
+                sb.append(resultSet.getInt("uid")).append(",");
+            }
+            sb.append(-1); //占位符，uid从1开始
+
+            sql = "UPDATE Users SET buddyList = ? WHERE username = ?";
+            PreparedStatement statement2 = connection.prepareStatement(sql);
+            statement2.setString(1, sb.toString());
+            statement2.setString(2, user.getName());
+            statement2.executeUpdate();
+        }
+    }
+
+    //获取全体用户列表
+    static List<User> getUserList() throws SQLException {
+        try (Connection connection = Program.connectDatabase()) {
+            String sql = "SELECT username FROM Users";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
 
             List<User> list = new ArrayList<>();
             while (resultSet.next()) {
