@@ -13,6 +13,7 @@ public class FileMessage implements DataElement {
     private File file;
     private String filename;
     private long size;
+    private String id;
 
     public User getTo() {
         return to;
@@ -29,20 +30,26 @@ public class FileMessage implements DataElement {
     public String getFilename() {
         return filename;
     }
+    public String getId() {
+        return id;
+    }
 
-    public FileMessage(User from, User to, File file, String filename, long size) {
+
+    public FileMessage(User from, User to, File file, String filename, long size, String id) {
         this.from = from;
         this.to = to;
         this.file = file;
         this.filename = filename;
         this.size = size;
+        this.id = id;
     }
 
     @Override
     public String getXML() {
         Element fileElement = DocumentHelper.createElement("file")
                 .addAttribute("from", from.getName())
-                .addAttribute("to", to.getName());
+                .addAttribute("to", to.getName())
+                .addAttribute("id", id);
 
         fileElement.addElement("info")
                 .addAttribute("filename", filename).
@@ -54,6 +61,7 @@ public class FileMessage implements DataElement {
     static FileMessage parseXML(Element root) throws InvalidElementException{
         String fromName = root.attributeValue("from");
         String toName = root.attributeValue("to");
+        String id = root.attributeValue("id");
 
         if (fromName.isEmpty()) throw new InvalidElementException("from为空");
         if (toName.isEmpty()) throw new InvalidElementException("to为空");
@@ -62,6 +70,6 @@ public class FileMessage implements DataElement {
         String filename = infoElement.attributeValue("filename");
         int size = Integer.valueOf(infoElement.attributeValue("size"));
 
-        return new FileMessage(new User(fromName), new User(toName), null, filename, size);
+        return new FileMessage(new User(fromName), new User(toName), null, filename, size, id);
     }
 }

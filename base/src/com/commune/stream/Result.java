@@ -3,10 +3,10 @@ package com.commune.stream;
 import org.dom4j.*;
 
 public class Result implements InfoQueryElement {
-    String to;
-    String id;
-    String type;
-    String body;
+    private String to;
+    private String id;
+    private String type;
+    private String body;
 
     public String getTo() {
         return to;
@@ -37,6 +37,8 @@ public class Result implements InfoQueryElement {
     public static final String BODY_LOGIN_SUCCESS = "Login success";
     public static final String BODY_LOGIN_WRONG_INFO = "Incorrect username or password";
     public static final String BODY_INVALID_USER = "Invalid username";
+    public static final String BODY_FILE_ACCEPT = "File accepted";
+    public static final String BODY_FILE_REJECT = "File objected";
 
     public String getXML() {
         Namespace namespace = DocumentHelper.createNamespace("", "iq:result");
@@ -52,7 +54,7 @@ public class Result implements InfoQueryElement {
         return iqElement.asXML();
     }
 
-    public static Result parseXML(Element iqElement) {
+    static Result parseXML(Element iqElement) {
         String to = iqElement.attributeValue("to");
         String id = iqElement.attributeValue("id");
 

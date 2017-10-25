@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class ChatWindowController implements Initializable, WindowController{
     @FXML
@@ -96,16 +97,20 @@ public class ChatWindowController implements Initializable, WindowController{
                         "\n真的要继续吗？",
                 ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> result = alert.showAndWait();
-        if(result.isPresent() && result.get().equals(ButtonType.YES)) {
+
+        if (result.isPresent() && result.get().equals(ButtonType.YES)) {
             appendMessage(new Message(from,to, "正在传输文件 " + file.getName() + "..."));
-            FileMessage fileMessage = new FileMessage(from, to, file, file.getName(), file.length());
+            String ID = UUID.randomUUID().toString();
+            FileMessage fileMessage = new FileMessage(from, to, file, file.getName(), file.length(), ID);
+            synchronized (App.RequestIDs) {
+                App.RequestIDs.add(ID);
+                App.RequestIDs.notify();
+            }
             synchronized (App.ElementSendQueue) {
                 App.ElementSendQueue.add(fileMessage);
                 App.ElementSendQueue.notify();
             }
         }
-
-        //FileSendWindowController.newFileSendWindow(getClass(), to);
     }
 
     void appendMessage(Message message) {

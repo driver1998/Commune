@@ -38,29 +38,28 @@ public interface DataElement {
 
 
     static DataElement getElement(Socket socket) throws IOException, InvalidElementException {
-        try  {
-            BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            String line;
-            StringBuilder sb = new StringBuilder();
+        String line;
+        StringBuilder sb = new StringBuilder();
 
-            while ((line=br.readLine())!=null) {
-                if (line.equals("<break/>")) break;
-                sb.append(line);
-                System.out.println(line);
-            }
 
-            System.out.println("captured here");
-            return getElement(sb.toString());
-        } catch (IOException ex) {
-            throw ex;
+        while ((line=br.readLine())!=null) {
+            if (line.equals("<break/>")) break;
+            sb.append(line);
+            System.out.println("recv " + line);
         }
+
+        return getElement(sb.toString());
     }
 
     default void send(Socket socket) {
         try  {
+            String xml = getXML();
+            System.out.print("send " + xml + "\n");
+
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            bw.write(getXML() + "\n" + "<break/>" + "\n");
+            bw.write(xml + "\n" + "<break/>" + "\n");
             bw.newLine();
             bw.flush();
 

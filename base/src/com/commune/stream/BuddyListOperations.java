@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BuddyListOperations implements InfoQueryElement{
-    User from;
-    User to;
-    String id;
-    String operation;
-    List<User> items;
+    private User from;
+    private User to;
+    private String id;
+    private String operation;
+    private List<User> items;
 
     public String getId() {
         return id;
@@ -67,7 +67,7 @@ public class BuddyListOperations implements InfoQueryElement{
         return iqElement.asXML();
     }
 
-    public static BuddyListOperations parseXML(Element iqElement) {
+    static BuddyListOperations parseXML(Element iqElement) {
 
         String id = iqElement.attributeValue("id");
         String fromID = iqElement.attributeValue("from");

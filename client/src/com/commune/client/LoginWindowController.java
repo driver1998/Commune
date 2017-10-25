@@ -40,7 +40,7 @@ public class LoginWindowController implements WindowController{
     protected void onLoginButtonAction(ActionEvent actionEvent) {
 
         try {
-            App.Socket = new Socket("192.168.1.229", 4074);
+            App.Socket = new Socket("127.0.0.1", 4074);
             App.Socket.setKeepAlive(true);
 
             App.SendTask = new SendTask();
