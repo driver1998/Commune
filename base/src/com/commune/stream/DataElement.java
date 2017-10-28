@@ -38,7 +38,7 @@ public interface DataElement {
 
 
     static DataElement getElement(Socket socket) throws IOException, InvalidElementException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 
         String line;
         StringBuilder sb = new StringBuilder();
@@ -58,7 +58,7 @@ public interface DataElement {
             String xml = getXML();
             System.out.print("send " + xml + "\n");
 
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
             bw.write(xml + "\n" + "<break/>" + "\n");
             bw.newLine();
             bw.flush();

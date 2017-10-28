@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="dom4j-2.1.0">
+    <archive path="D:/Projects/Java/Commune/lib/dom4j-2.1.0.jar" />
+  </library>
+  <library name="mysql-connector-java-5.1.44-bin">
+    <archive path="D:/Projects/Java/Commune/lib/mysql-connector-java-5.1.44-bin.jar" />
+  </library>
+</eclipse-userlibraries>
+
