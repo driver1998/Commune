@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 
 public class Message implements DataElement {
@@ -47,11 +48,11 @@ public class Message implements DataElement {
 
 
             Element bodyElement = document.createElement("body");
-            bodyElement.setNodeValue(body);
+            bodyElement.setTextContent(body);
             messageElement.appendChild(bodyElement);
 
             return Util.getXmlString(document);
-        } catch (ParserConfigurationException | IOException ex) {
+        } catch (ParserConfigurationException | IOException | TransformerException ex) {
             ex.printStackTrace();
             return "";
         }
@@ -68,7 +69,7 @@ public class Message implements DataElement {
         User to = new User(toName);
 
         Element bodyElement = (Element)messageElement.getElementsByTagName("body").item(0);
-        String body = bodyElement.getNodeValue();
+        String body = bodyElement.getTextContent();
 
         return new Message(from, to, body);
     }

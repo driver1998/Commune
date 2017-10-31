@@ -2,6 +2,7 @@ package com.commune.client;
 
 import com.commune.model.User;
 import com.commune.stream.DataElement;
+import com.commune.utils.Util;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +10,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -40,23 +47,24 @@ public class App extends Application {
     static int port = 4074;
 
     private static void getSettings() {
-//        try {
-//            BufferedReader reader =new BufferedReader(new FileReader("commune.config"));
-//            String line;
-//            StringBuilder sb = new StringBuilder();
-//            while ((line = reader.readLine()) != null) {
-//                sb.append(line);
-//            }
-//
-//            Document document = DocumentHelper.parseText(sb.toString());
-//            Element root = document.getRootElement();
-//            Element serverElement = root.element("client");
-//            server = serverElement.element("server").getText();
-//            port = Integer.valueOf(serverElement.element("port").getText());
-//
-//        } catch (IOException | DocumentException ex) {
-//            ex.printStackTrace();
-//        }
+        try {
+            BufferedReader reader =new BufferedReader(new FileReader("commune.config"));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            Document document = Util.parseXmlString(sb.toString());
+            Element root = document.getDocumentElement();
+            Element clientElement = (Element) root.getElementsByTagName("client").item(0);
+
+            server = clientElement.getElementsByTagName("server").item(0).getTextContent();
+            port = Integer.valueOf(clientElement.getElementsByTagName("port").item(0).getTextContent());
+
+        } catch (IOException | ParserConfigurationException | SAXException ex) {
+            ex.printStackTrace();
+        }
 
     }
     public static void main(String[] args) {

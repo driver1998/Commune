@@ -8,9 +8,10 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 
-public class Result implements InfoQueryElement {
+public class Result implements DataElement {
     private String to;
     private String id;
     private String type;
@@ -56,41 +57,33 @@ public class Result implements InfoQueryElement {
 
             Document document = builder.newDocument();
 
+            Element resultElement = document.createElement("result");
+            document.appendChild(resultElement);
 
-            //Namespace namespace = DocumentHelper.createNamespace("", "iq:result");
-            Element iqElement = document.createElement("iq");
-            document.appendChild(iqElement);
+            if (!to.isEmpty()) resultElement.setAttribute("to", to);
+            resultElement.setAttribute("id", id);
+            resultElement.setAttribute("type", type);
 
-            iqElement.setAttribute("id", id);
-
-            if (!to.isEmpty()) iqElement.setAttribute("to", to);
-
-
-            Element queryElement = document.createElementNS("query", "iq:result");
-            iqElement.appendChild(queryElement);
-
-            Element typeElement = document.createElement(type);
-            typeElement.setNodeValue(body);
-            queryElement.appendChild(typeElement);
+            Element bodyElement = document.createElement("body");
+            bodyElement.setTextContent(this.body);
+            resultElement.appendChild(bodyElement);
 
 
             return Util.getXmlString(document);
-        } catch (ParserConfigurationException | IOException ex) {
+        } catch (ParserConfigurationException | IOException | TransformerException ex) {
             ex.printStackTrace();
             return "";
         }
     }
 
-    static Result parseXML(Element iqElement) {
-        String to = iqElement.getAttribute("to");
-        String id = iqElement.getAttribute("id");
+    static Result parseXML(Element root) {
 
-        Element queryElement =(Element) iqElement.getElementsByTagName("query").item(0);
+        String to = root.getAttribute("to");
+        String id = root.getAttribute("id");
+        String type = root.getAttribute("type");
 
-        Element typeElement = (Element) queryElement.getChildNodes().item(0);
-
-        String type = typeElement.getNodeName();
-        String body = typeElement.getNodeValue();
+        Element messageElement =(Element) root.getElementsByTagName("body").item(0);
+        String body = messageElement.getTextContent();
 
         return new Result(to, id, type, body);
     }

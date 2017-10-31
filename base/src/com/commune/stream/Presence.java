@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 
 public class Presence implements DataElement {
@@ -62,15 +63,13 @@ public class Presence implements DataElement {
             document.appendChild(presenceElement);
 
             presenceElement.setAttribute("from", from.getName());
-
-            if (!type.equals(TYPE_AVAILABLE)) presenceElement.setAttribute("type", type);
-
             if (to != null) presenceElement.setAttribute("to", to.getName());
-
+            if (!type.equals(TYPE_AVAILABLE)) presenceElement.setAttribute("type", type);
             if (id != null) presenceElement.setAttribute("id", id);
 
+
             return Util.getXmlString(document);
-        } catch (ParserConfigurationException | IOException ex) {
+        } catch (ParserConfigurationException | IOException | TransformerException ex) {
             ex.printStackTrace();
             return "";
         }

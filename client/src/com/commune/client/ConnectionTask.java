@@ -5,13 +5,9 @@ import com.commune.stream.*;
 import com.commune.utils.Util;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
@@ -20,6 +16,7 @@ import java.util.Optional;
 
 import static com.commune.client.App.ElementSendQueue;
 import static com.commune.client.App.RequestIDs;
+
 
 
 //发送element到服务器的线程
@@ -111,6 +108,7 @@ class ConnectionTask extends Task<Integer> {
 
     @Override
     protected Integer call() throws Exception {
+
         try{
             while(!stop) {
                 processElements();
@@ -188,7 +186,7 @@ class ConnectionTask extends Task<Integer> {
                 ElementSendQueue.notify();
             }
         });
-    }
+    } //收到好友请求
     private void processPresenceUnSubscription(Presence presence) {
         Platform.runLater(()->{
             if (App.UserList != null) {
@@ -205,7 +203,7 @@ class ConnectionTask extends Task<Integer> {
                     presence.getFrom() + " 已将你从好友列表中删除。");
             alert.show();
         });
-    }
+    } //收到被删除好友的通知
     private void processPresenceAvailability(Presence presence) {
         Platform.runLater(()->{
             if (App.UserList != null) {
@@ -220,22 +218,25 @@ class ConnectionTask extends Task<Integer> {
                 }
             }
         });
-    }
+    } //上下线
     private void processPresenceResponse(Presence presence) {
         Platform.runLater(()->{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                    presence.getFrom() + " 已将你添加为好友。");
-            alert.show();
-
             if (presence.getType().equals(Presence.TYPE_ACCEPT)) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                        presence.getFrom() + " 已同意你的好友请求，你们现在是好友了。");
+                alert.show();
                 if (App.UserList != null) {
                     User user = presence.getFrom();
                     user.setOnline(true);
                     App.UserList.add(user);
                 }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                        presence.getFrom() + " 拒绝了你的好友请求。");
+                alert.show();
             }
         });
-    }
+    }   //加好友，对方是否同意的反馈
 
     //接收message，然后选取相应的聊天窗口，把它显示出来
     private void processMessage(Message message) {
@@ -331,7 +332,7 @@ class ConnectionTask extends Task<Integer> {
             case BuddyListOperations.OPERATION_NS_QUERY:
                 //QUERY 返回好友列表
                 Platform.runLater(()->{
-                    if (App.UserList!=null) {
+                    if (App.UserList!=null && operations.getItems()!=null) {
                         App.UserList.clear();
                         App.UserList.setAll(operations.getItems());
                     }
@@ -487,4 +488,6 @@ class ConnectionTask extends Task<Integer> {
             UserListWindowController.newUserListWindow(getClass());
         } );
     }
+
+
 }

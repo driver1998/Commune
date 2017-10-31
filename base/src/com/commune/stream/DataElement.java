@@ -26,10 +26,14 @@ public interface DataElement {
                     return Message.parseXML(root);
                 case "presence":
                     return Presence.parseXML(root);
-                case "iq":
-                    return InfoQueryElement.getElement(xmlString);
                 case "file":
                     return FileMessage.parseXML(root);
+                case "auth":
+                    return Auth.parseXML(root);
+                case "result":
+                    return Result.parseXML(root);
+                case "buddy":
+                    return BuddyListOperations.parseXML(root);
                 default:
                     throw new InvalidElementException("格式错误");
             }
@@ -47,11 +51,11 @@ public interface DataElement {
         String line;
         StringBuilder sb = new StringBuilder();
 
-
+        System.out.println("recv");
         while ((line=br.readLine())!=null) {
             if (line.equals("<break/>")) break;
             sb.append(line);
-            System.out.println("recv " + line);
+            System.out.println(line);
         }
 
         return getElement(sb.toString());
@@ -61,7 +65,7 @@ public interface DataElement {
     default void send(Socket socket) {
         try  {
             String xml = getXML();
-            System.out.print("send " + xml + "\n");
+            System.out.print("send\n" + xml + "\n");
 
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"));
             bw.write(xml + "\n" + "<break/>" + "\n");

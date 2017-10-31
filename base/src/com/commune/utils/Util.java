@@ -1,13 +1,17 @@
 package com.commune.utils;
 
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,25 +70,32 @@ public class Util {
             return String.format("%.1f", len) + " " + units[i];
     }
 
-    public static String getXmlString(Document document) throws IOException{
+    public static String getXmlString(Document document) throws IOException, TransformerException{
+            document.setXmlStandalone(true);
 
-        document.setXmlStandalone(true);
 
-        StringWriter writer = new StringWriter();
-        OutputFormat format = new OutputFormat(document, "UTF-8", true);
-        format.setIndenting(true);
-        format.setIndent(4);
+            StringWriter writer = new StringWriter();
 
-        XMLSerializer serializer = new XMLSerializer(writer, format);
-        serializer.asDOMSerializer();
-        serializer.serialize(document);
 
-        return writer.toString();
+            StreamResult result = new StreamResult(writer);
+
+            DOMSource source = new DOMSource(document);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+            transformer.transform(source, result);
+
+            return writer.toString().replaceAll("<\\?xml.*?\\?>", "");
     }
 
     public static Document parseXmlString (String xmlString) throws ParserConfigurationException, SAXException, IOException{
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(true);
         DocumentBuilder builder = factory.newDocumentBuilder();
+
         InputStream inputStream = new ByteArrayInputStream(xmlString.getBytes("UTF-8"));
         return builder.parse(inputStream);
     }

@@ -1,16 +1,16 @@
 package com.commune.stream;
 
 import com.commune.utils.Util;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 
-public class Auth implements InfoQueryElement {
+public class Auth implements DataElement {
     private String username;
     private String hash1;
     private String id;
@@ -38,46 +38,39 @@ public class Auth implements InfoQueryElement {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
 
-            Document document = builder.newDocument();
+
+            Document document =builder.newDocument();
 
 
-            Element iqElement = document.createElement("iq");
-            document.appendChild(iqElement);
+            Element authElement = document.createElement("auth");
+            document.appendChild(authElement);
 
-            Attr idAttr = document.createAttribute("id"); idAttr.setValue(id);
-            iqElement.getAttributes().setNamedItem(idAttr);
-
-            Element queryElement = document.createElementNS("iq:auth", "query");
-            iqElement.appendChild(queryElement);
+            authElement.setAttribute("id", id);
 
             Element usernameElement = document.createElement("username");
-            usernameElement.setNodeValue(username);
-            queryElement.appendChild(usernameElement);
+            usernameElement.setTextContent(username);
+            authElement.appendChild(usernameElement);
 
             Element hashElement = document.createElement("hash");
-            hashElement.setNodeValue(hash1);
-            queryElement.appendChild(hashElement);
-
-
+            hashElement.setTextContent(hash1);
+            authElement.appendChild(hashElement);
 
             return Util.getXmlString(document);
-        } catch (ParserConfigurationException | IOException ex) {
+        } catch (ParserConfigurationException | IOException | TransformerException ex) {
             ex.printStackTrace();
             return "";
         }
 
     }
 
-    static Auth parseXML(Element iqElement) {
-        String id = iqElement.getAttribute("id");
+    static Auth parseXML(Element root) {
+        String id = root.getAttribute("id");
 
-        Element queryElement = (Element)iqElement.getElementsByTagName("query").item(0);
+        Element usernameElement = (Element) root.getElementsByTagName("username").item(0);
+        String username = usernameElement.getTextContent();
 
-        Element usernameElement = (Element) queryElement.getElementsByTagName("username").item(0);
-        String username = usernameElement.getNodeValue();
-
-        Element hashElement = (Element) queryElement.getElementsByTagName("hash").item(0);
-        String hash1 = hashElement.getNodeValue();
+        Element hashElement = (Element) root.getElementsByTagName("hash").item(0);
+        String hash1 = hashElement.getTextContent();
 
         return new Auth(username, hash1, id);
     }

@@ -2,7 +2,14 @@ package com.commune.server;
 
 import com.commune.model.User;
 import com.commune.stream.*;
+import com.commune.utils.Util;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,24 +27,26 @@ public class Program {
     private static int port = 4074;
 
     private static void getSettings() {
-//        try {
-//            BufferedReader reader =new BufferedReader(new FileReader("server.config"));
-//            String line;
-//            StringBuilder sb = new StringBuilder();
-//            while ((line = reader.readLine()) != null) {
-//                sb.append(line);
-//            }
-//
-//            Document document = DocumentHelper.parseText(sb.toString());
-//            Element root = document.getRootElement();
-//            Element serverElement = root.element("server");
-//            url = serverElement.element("url").getText();
-//            user = serverElement.element("user").getText();
-//            password = serverElement.element("password").getText();
-//            port = Integer.valueOf(serverElement.element("port").getText());
-//        } catch (IOException | DocumentException ex) {
-//            ex.printStackTrace();
-//        }
+        try {
+            BufferedReader reader =new BufferedReader(new FileReader("server.config"));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            Document document = Util.parseXmlString(sb.toString());
+
+            Element root = document.getDocumentElement();
+            Element serverElement =(Element) root.getElementsByTagName("server").item(0);
+
+            url = serverElement.getElementsByTagName("url").item(0).getTextContent();
+            user = serverElement.getElementsByTagName("user").item(0).getTextContent();
+            password = serverElement.getElementsByTagName("password").item(0).getTextContent();
+            port = Integer.valueOf(serverElement.getElementsByTagName("port").item(0).getTextContent());
+        } catch (IOException | ParserConfigurationException | SAXException ex) {
+            ex.printStackTrace();
+        }
 
     }
 

@@ -9,11 +9,12 @@ import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuddyListOperations implements InfoQueryElement{
+public class BuddyListOperations implements DataElement{
     private User from;
     private User to;
     private String id;
@@ -45,10 +46,10 @@ public class BuddyListOperations implements InfoQueryElement{
         return keyword;
     }
 
-    public static final String OPERATION_NS_QUERY = "iq:buddy:query";
-    public static final String OPERATION_NS_SEARCH = "iq:buddy:search";
-    public static final String OPERATION_NS_ADD = "iq:buddy:add";
-    public static final String OPERATION_NS_DELETE = "iq:buddy:remove";
+    public static final String OPERATION_NS_QUERY = "query";
+    public static final String OPERATION_NS_SEARCH = "search";
+    public static final String OPERATION_NS_ADD = "add";
+    public static final String OPERATION_NS_DELETE = "remove";
 
     public BuddyListOperations(User from, User to, String id, String operation, List<User> items) {
         this.items = items;
@@ -74,58 +75,54 @@ public class BuddyListOperations implements InfoQueryElement{
 
             Document document = builder.newDocument();
 
-            Element iqElement = document.createElement("iq");
-            document.appendChild(iqElement);
+            Element buddyElement = document.createElement("buddy");
+            document.appendChild(buddyElement);
 
-            iqElement.setAttribute("id", id);
 
-            if (from != null) iqElement.setAttribute("from", from.getName());
-            if (to != null) iqElement.setAttribute("to", to.getName());
-
-            Element queryElement = document.createElementNS(operation, "query");
-            iqElement.appendChild(queryElement);
+            if (from != null) buddyElement.setAttribute("from", from.getName());
+            if (to != null) buddyElement.setAttribute("to", to.getName());
+            buddyElement.setAttribute("type", operation);
 
             if (operation.equals(BuddyListOperations.OPERATION_NS_SEARCH))
-                queryElement.setAttribute("keyword", keyword);
+                buddyElement.setAttribute("keyword", keyword);
+
+            buddyElement.setAttribute("id", id);
 
             if (items != null) {
                 for (User u : items) {
                     Element itemElement = document.createElement("item");
-                    itemElement.setNodeValue(u.getName());
-                    queryElement.appendChild(itemElement);
+                    itemElement.setTextContent(u.getName());
+                    buddyElement.appendChild(itemElement);
                 }
             }
             return Util.getXmlString(document);
-        } catch (ParserConfigurationException | IOException ex) {
+        } catch (ParserConfigurationException | IOException | TransformerException ex) {
             ex.printStackTrace();
             return "";
         }
     }
 
-    static BuddyListOperations parseXML(Element iqElement) {
-        String id = iqElement.getAttribute("id");
-        String fromID = iqElement.getAttribute("from");
-        String toID = iqElement.getAttribute("to");
+    static BuddyListOperations parseXML(Element root) {
+        String id = root.getAttribute("id");
+        String fromID = root.getAttribute("from");
+        String toID = root.getAttribute("to");
+        String operation = root.getAttribute("type");
+        String keyword = root.getAttribute("keyword");
 
         User from = null;
         User to = null;
         if (fromID != null && !fromID.isEmpty()) from = new User(fromID);
         if (toID != null && !toID.isEmpty()) to = new User(toID);
 
-        Element queryElement = (Element) iqElement.getElementsByTagName("query").item(0);
-        String operation = queryElement.getNamespaceURI();
-
-        String keyword = queryElement.getAttribute("keyword");
-
         List<User> users = new ArrayList<>();
 
-        NodeList elements =  queryElement.getElementsByTagName("item");
+        NodeList elements =  root.getElementsByTagName("item");
         if (elements!=null) {
             int length = elements.getLength();
 
             for (int i=0; i<length; i++) {
                 Element e = (Element) elements.item(i);
-                users.add(new User(e.getNodeValue()));
+                users.add(new User(e.getTextContent()));
             }
         }
 

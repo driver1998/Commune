@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
 
@@ -59,10 +60,10 @@ public class FileMessage implements DataElement {
 
             Element fileElement = document.createElement("file");
             document.appendChild(fileElement);
-            fileElement.setAttribute("id", id);
-            fileElement.setAttribute("to", to.getName());
-            fileElement.setAttribute("from", from.getName());
 
+            fileElement.setAttribute("from", from.getName());
+            fileElement.setAttribute("to", to.getName());
+            fileElement.setAttribute("id", id);
 
             Element infoElement = document.createElement("info");
             fileElement.appendChild(infoElement);
@@ -71,7 +72,7 @@ public class FileMessage implements DataElement {
             infoElement.setAttribute("size", String.valueOf(size));
 
             return Util.getXmlString(document);
-        } catch (ParserConfigurationException | IOException ex){
+        } catch (ParserConfigurationException | TransformerException | IOException ex){
             ex.printStackTrace();
             return "";
         }
