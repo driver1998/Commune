@@ -1,10 +1,15 @@
 package com.commune.stream;
 
 import com.commune.model.User;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
+import com.commune.utils.Util;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.IOException;
 
 public class FileMessage implements DataElement {
 
@@ -46,29 +51,43 @@ public class FileMessage implements DataElement {
 
     @Override
     public String getXML() {
-        Element fileElement = DocumentHelper.createElement("file")
-                .addAttribute("from", from.getName())
-                .addAttribute("to", to.getName())
-                .addAttribute("id", id);
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-        fileElement.addElement("info")
-                .addAttribute("filename", filename).
-                addAttribute("size", String.valueOf(size));
+            Document document = builder.newDocument();
 
-        return fileElement.asXML();
+            Element fileElement = document.createElement("file");
+            document.appendChild(fileElement);
+            fileElement.setAttribute("id", id);
+            fileElement.setAttribute("to", to.getName());
+            fileElement.setAttribute("from", from.getName());
+
+
+            Element infoElement = document.createElement("info");
+            fileElement.appendChild(infoElement);
+
+            infoElement.setAttribute("filename", filename);
+            infoElement.setAttribute("size", String.valueOf(size));
+
+            return Util.getXmlString(document);
+        } catch (ParserConfigurationException | IOException ex){
+            ex.printStackTrace();
+            return "";
+        }
     }
 
     static FileMessage parseXML(Element root) throws InvalidElementException{
-        String fromName = root.attributeValue("from");
-        String toName = root.attributeValue("to");
-        String id = root.attributeValue("id");
+        String fromName = root.getAttribute("from");
+        String toName = root.getAttribute("to");
+        String id = root.getAttribute("id");
 
         if (fromName.isEmpty()) throw new InvalidElementException("from为空");
         if (toName.isEmpty()) throw new InvalidElementException("to为空");
 
-        Element infoElement = root.element("info");
-        String filename = infoElement.attributeValue("filename");
-        int size = Integer.valueOf(infoElement.attributeValue("size"));
+        Element infoElement = (Element)root.getElementsByTagName("info").item(0);
+        String filename = infoElement.getAttribute("filename");
+        int size = Integer.valueOf(infoElement.getAttribute("size"));
 
         return new FileMessage(new User(fromName), new User(toName), null, filename, size, id);
     }

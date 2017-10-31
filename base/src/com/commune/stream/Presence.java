@@ -1,13 +1,20 @@
 package com.commune.stream;
 
 import com.commune.model.User;
-import org.dom4j.DocumentHelper;
+import com.commune.utils.Util;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 public class Presence implements DataElement {
-    User from;
-    User to;
-    String id;
-    String type;
+    private User from;
+    private User to;
+    private String id;
+    private String type;
 
     public static final String TYPE_AVAILABLE = "";
     public static final String TYPE_UNAVAILABLE = "unavailable";
@@ -44,25 +51,39 @@ public class Presence implements DataElement {
 
 
     public String getXML() {
-        org.dom4j.Element presenceElement = DocumentHelper.createElement("presence")
-                .addAttribute("from", from.getName());
+        try {
 
-        if (!type.equals(TYPE_AVAILABLE)) presenceElement.addAttribute("type", type);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-        if (to != null) presenceElement.addAttribute("to", to.getName());
+            Document document = builder.newDocument();
 
-        if (id != null) presenceElement.addAttribute("id", id);
+            Element presenceElement = document.createElement("presence");
+            document.appendChild(presenceElement);
 
-        return presenceElement.asXML();
+            presenceElement.setAttribute("from", from.getName());
+
+            if (!type.equals(TYPE_AVAILABLE)) presenceElement.setAttribute("type", type);
+
+            if (to != null) presenceElement.setAttribute("to", to.getName());
+
+            if (id != null) presenceElement.setAttribute("id", id);
+
+            return Util.getXmlString(document);
+        } catch (ParserConfigurationException | IOException ex) {
+            ex.printStackTrace();
+            return "";
+        }
+
     }
 
-    static Presence parseXML(org.dom4j.Element presenceElement) throws InvalidElementException {
+    static Presence parseXML(Element presenceElement) throws InvalidElementException {
 
-        String type = presenceElement.attributeValue("type");
+        String type = presenceElement.getAttribute("type");
         if (type == null) type = TYPE_AVAILABLE;
-        String fromName = presenceElement.attributeValue("from");
-        String toName = presenceElement.attributeValue("to");
-        String id = presenceElement.attributeValue("id");
+        String fromName = presenceElement.getAttribute("from");
+        String toName = presenceElement.getAttribute("to");
+        String id = presenceElement.getAttribute("id");
 
         if (fromName.isEmpty()) throw new InvalidElementException("from为空");
 

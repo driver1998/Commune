@@ -1,14 +1,11 @@
 package com.commune.server;
-import com.commune.stream.*;
+
 import com.commune.model.User;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
+import com.commune.stream.*;
 
-import org.dom4j.Document;
-import org.dom4j.Element;
-
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -22,25 +19,25 @@ public class Program {
     private static String password = "p@ssw0rd";
     private static int port = 4074;
 
-    static void getSettings() {
-        try {
-            BufferedReader reader =new BufferedReader(new FileReader("server.config"));
-            String line;
-            StringBuilder sb = new StringBuilder();
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-
-            Document document = DocumentHelper.parseText(sb.toString());
-            Element root = document.getRootElement();
-            Element serverElement = root.element("server");
-            url = serverElement.element("url").getText();
-            user = serverElement.element("user").getText();
-            password = serverElement.element("password").getText();
-            port = Integer.valueOf(serverElement.element("port").getText());
-        } catch (IOException | DocumentException ex) {
-            ex.printStackTrace();
-        }
+    private static void getSettings() {
+//        try {
+//            BufferedReader reader =new BufferedReader(new FileReader("server.config"));
+//            String line;
+//            StringBuilder sb = new StringBuilder();
+//            while ((line = reader.readLine()) != null) {
+//                sb.append(line);
+//            }
+//
+//            Document document = DocumentHelper.parseText(sb.toString());
+//            Element root = document.getRootElement();
+//            Element serverElement = root.element("server");
+//            url = serverElement.element("url").getText();
+//            user = serverElement.element("user").getText();
+//            password = serverElement.element("password").getText();
+//            port = Integer.valueOf(serverElement.element("port").getText());
+//        } catch (IOException | DocumentException ex) {
+//            ex.printStackTrace();
+//        }
 
     }
 
@@ -124,7 +121,7 @@ public class Program {
             Result result = new Result(username, id, Result.TYPE_INFORMATION, Result.BODY_LOGIN_SUCCESS);
             result.send(socket);
 
-            try (ClientConnection connection = ClientConnection.newInstance(socket, user);){
+            try (ClientConnection connection = ClientConnection.newInstance(socket, user)){
                 connection.listen();
             } catch (ClientConnection.ClientDisconnectException ex) {
                 System.out.println(ex.getMessage());

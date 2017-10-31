@@ -1,9 +1,11 @@
 package com.commune.stream;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
+import com.commune.utils.Util;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.Socket;
 
@@ -13,9 +15,11 @@ public interface DataElement {
 
     static DataElement getElement(String xmlString) throws InvalidElementException {
         try {
-            Document document = DocumentHelper.parseText(xmlString);
-            org.dom4j.Element root = document.getRootElement();
-            String name = root.getName();
+
+            Document document = Util.parseXmlString(xmlString);
+
+            Element root = document.getDocumentElement();
+            String name = root.getNodeName();
 
             switch (name) {
                 case "message":
@@ -30,7 +34,7 @@ public interface DataElement {
                     throw new InvalidElementException("格式错误");
             }
 
-        } catch (DocumentException ex) {
+        } catch (IOException | SAXException | ParserConfigurationException ex) {
             System.out.println(xmlString);
             throw new InvalidElementException("格式错误");
         }
@@ -52,6 +56,7 @@ public interface DataElement {
 
         return getElement(sb.toString());
     }
+
 
     default void send(Socket socket) {
         try  {

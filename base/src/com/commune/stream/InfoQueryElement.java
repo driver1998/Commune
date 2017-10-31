@@ -1,13 +1,22 @@
 package com.commune.stream;
 
-import org.dom4j.*;
+import com.commune.utils.Util;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 public interface InfoQueryElement extends DataElement {
     static InfoQueryElement getElement(String xmlString) throws InvalidElementException {
         try {
-            Document document = DocumentHelper.parseText(xmlString);
-            Element iqElement = document.getRootElement();
-            Element queryElement = iqElement.element("query");
+
+            Document document = Util.parseXmlString(xmlString);
+
+            Element iqElement = document.getDocumentElement();
+            Node queryElement = iqElement.getElementsByTagName("query").item(0);
             String namespace = queryElement.getNamespaceURI();
 
             switch (namespace) {
@@ -26,7 +35,7 @@ public interface InfoQueryElement extends DataElement {
                     throw new InvalidElementException("格式错误");
             }
 
-        } catch (DocumentException ex) {
+        } catch (ParserConfigurationException | SAXException | IOException ex) {
             throw new InvalidElementException("格式错误");
         }
     }

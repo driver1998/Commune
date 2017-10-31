@@ -1,6 +1,14 @@
 package com.commune.stream;
 
-import org.dom4j.*;
+
+import com.commune.utils.Util;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 public class Result implements InfoQueryElement {
     private String to;
@@ -41,29 +49,48 @@ public class Result implements InfoQueryElement {
     public static final String BODY_FILE_REJECT = "File objected";
 
     public String getXML() {
-        Namespace namespace = DocumentHelper.createNamespace("", "iq:result");
-        Element iqElement = DocumentHelper.createElement("iq").addAttribute("id", id);
+        try {
 
-        if (!to.isEmpty()) iqElement.addAttribute("to", to);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
-        Element queryElement = iqElement.addElement(new QName("query", namespace));
+            Document document = builder.newDocument();
 
-        Element typeElement = queryElement.addElement(type);
-        typeElement.setText(body);
 
-        return iqElement.asXML();
+            //Namespace namespace = DocumentHelper.createNamespace("", "iq:result");
+            Element iqElement = document.createElement("iq");
+            document.appendChild(iqElement);
+
+            iqElement.setAttribute("id", id);
+
+            if (!to.isEmpty()) iqElement.setAttribute("to", to);
+
+
+            Element queryElement = document.createElementNS("query", "iq:result");
+            iqElement.appendChild(queryElement);
+
+            Element typeElement = document.createElement(type);
+            typeElement.setNodeValue(body);
+            queryElement.appendChild(typeElement);
+
+
+            return Util.getXmlString(document);
+        } catch (ParserConfigurationException | IOException ex) {
+            ex.printStackTrace();
+            return "";
+        }
     }
 
     static Result parseXML(Element iqElement) {
-        String to = iqElement.attributeValue("to");
-        String id = iqElement.attributeValue("id");
+        String to = iqElement.getAttribute("to");
+        String id = iqElement.getAttribute("id");
 
-        Element queryElement = iqElement.element("query");
+        Element queryElement =(Element) iqElement.getElementsByTagName("query").item(0);
 
-        Element typeElement = queryElement.elements().get(0);
-        String type = typeElement.getName();
+        Element typeElement = (Element) queryElement.getChildNodes().item(0);
 
-        String body = typeElement.getText();
+        String type = typeElement.getNodeName();
+        String body = typeElement.getNodeValue();
 
         return new Result(to, id, type, body);
     }

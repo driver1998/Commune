@@ -1,5 +1,17 @@
 package com.commune.utils;
 
+import com.sun.org.apache.xml.internal.serialize.OutputFormat;
+import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
@@ -54,4 +66,26 @@ public class Util {
             return String.format("%.1f", len) + " " + units[i];
     }
 
+    public static String getXmlString(Document document) throws IOException{
+
+        document.setXmlStandalone(true);
+
+        StringWriter writer = new StringWriter();
+        OutputFormat format = new OutputFormat(document, "UTF-8", true);
+        format.setIndenting(true);
+        format.setIndent(4);
+
+        XMLSerializer serializer = new XMLSerializer(writer, format);
+        serializer.asDOMSerializer();
+        serializer.serialize(document);
+
+        return writer.toString();
+    }
+
+    public static Document parseXmlString (String xmlString) throws ParserConfigurationException, SAXException, IOException{
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        InputStream inputStream = new ByteArrayInputStream(xmlString.getBytes("UTF-8"));
+        return builder.parse(inputStream);
+    }
 }
