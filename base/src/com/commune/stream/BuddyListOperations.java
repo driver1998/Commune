@@ -48,8 +48,6 @@ public class BuddyListOperations implements DataElement{
 
     public static final String OPERATION_NS_QUERY = "query";
     public static final String OPERATION_NS_SEARCH = "search";
-    public static final String OPERATION_NS_ADD = "add";
-    public static final String OPERATION_NS_DELETE = "remove";
 
     public BuddyListOperations(User from, User to, String id, String operation, List<User> items) {
         this.items = items;

@@ -342,10 +342,6 @@ public class ClientConnection implements AutoCloseable{
             case BuddyListOperations.OPERATION_NS_QUERY:
                 processBuddyListQuery(operations);
                 break;
-            case BuddyListOperations.OPERATION_NS_ADD:
-                break;
-            case BuddyListOperations.OPERATION_NS_DELETE:
-                break;
             case BuddyListOperations.OPERATION_NS_SEARCH:
                 processBuddyListSearch(operations);
                 break;

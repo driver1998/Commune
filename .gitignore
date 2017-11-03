@@ -1,2 +1,5 @@
 out/
 stash/
+*.doc
+client/src/META-INF
+server/src/META-INF
